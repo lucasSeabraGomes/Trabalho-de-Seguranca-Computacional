@@ -1,0 +1,36 @@
+Aluno:Lucas Seabra Gomes Oliveira 170039951
+
+Informações iniciais:
+
+Para este trabalho foi ultilizada a biblioteca openssl presente no link https://www.openssl.org/source/
+A versão ultilizada do openssl foi openssl-3.0.0-alpha8.
+Para este trabalho todas as chaves são salvas em arquivos de texto,em uma aplicação real elas estariam criptogradas em arquivos teoricamente seguros.
+Para este trabalho as chaves são geradas via funções:RSA_generate_key_ex e BN_rand presentes na biblioteca openssl.
+
+Informações sobre a assinatura RSA:
+
+Para este trabalho foi realizado um esquema de assinatura OAEP que consiste na aplicação de uma modificação especifica da mensagem antes da aplicação da equação de assinatura do RSA.
+E por sua vez sera realizada uma operação inversa a essa modificação especifica após a equação de decifraçao RSA da assinatura.
+A razão de realizar esta modificação é impedir que a mensagem tenha relação com a assinatura garantindo que oraculos de cifração não possam usar propriedades matematicas sobre a assinatura para forjar assinaturas falsas.
+Na realização desta modificaçao foi ultilizada a função "PKCS1_MGF1" de expansão encontrada no link:https://docs.huihoo.com/doxygen/openssl/1.0.1c/rsa__oaep_8c_source.html
+A mensagem a ser assinada deve ser um texto de até 64 bytes escrita no próprio programa que será salva em um arquivo cujo nome será selecionado pelo usuário.
+A assinatura será unica, cada mensagem sera assinada apenas por um usuário.
+
+Informações sobre a verificação RSA:
+
+A verificação será realizada ao selecionar um usuario e uma mensagem para ser verificado, ele verificará se foi o usuario escolhido que realizou a assinatura na mensagem.
+Ela é realizada lendo o arquivo de assiantura e o arquivo da mensagem.
+Ele aplicará a inversa do RSA de assinatura para receber o valor do resultado da aplicação do OAEP e realizará a inversa do OAEP para retornar a mensagem concatenada com uma sequencia de zeros.
+Caso o resultado seja igual a mensagem acessada ele retornará para o usuário uma mensagem informando-o sobre isso.
+
+Como usar:
+
+Você pode escolher entre 3 funções:
+1-Verificar assinatura: 
+ Você deverá enviar o nome de um nome de usuário válido  e um nome de arquivo de mensagem valido e receberá como resposta as mensagens:
+ A mensagem: "mensagem" Foi assinada pelo usuario em questão. ou Esta mensagem não foi assinada pelo usuario em questão.
+2-Assinar uma mensagem:
+ Você deverá enviar o nome de um nome de usuário válido, escrever uma mensagem para ser assinada e por fim nomear o arquivo onde essa mensagem será salva
+ Ele salvará essa mensagem e sua assinatura.
+3-Adicionar um usuário:
+ Você apenas precisa escrever um nome para o usuário. Ele criará e salvará 'e''d''n' para este usuário.
